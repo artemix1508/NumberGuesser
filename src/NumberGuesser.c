@@ -14,11 +14,15 @@ int main() {
     int random_num = (my_rand() % 100) + 1;
     printf("Hello, This is my first C program for BoredOS!\n");
     printf("Guess the number between 1 and 100: ");
+    int guess = 0;
     while (1) {
-        int guess = 0;
-        if (scanf("%d", &guess) != 1) {
+        char buf[16];
+        if (fgets(buf, sizeof(buf), stdin) == NULL) {
             printf("Invalid input. Please enter a valid number: ");
-            while (getchar() != '\n');
+            continue;
+        }
+        if (sscanf(buf, "%d", &guess) != 1) {
+            printf("Invalid input. Please enter a valid number: ");
             continue;
         }
         if (guess < random_num) {
@@ -29,8 +33,6 @@ int main() {
             printf("Congratulations! You guessed the number %d correctly!\n", random_num);
             break;
         }
-        else {
-            printf("Invalid input. Please enter a number between 1 and 100: ");
-        }
+
     }  
 }
