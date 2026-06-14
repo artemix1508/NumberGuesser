@@ -3,7 +3,7 @@ DESTDIR ?= $(abspath build/bin)
 
 CC = x86_64-elf-gcc
 CFLAGS = -O2 -m64 -march=x86-64 -fno-stack-protector -fno-stack-check -fno-lto -fno-pie -ffreestanding -nostdlib -static -no-pie
-INCLUDES = -I$(BOREDOS_SDK)/include
+INCLUDES = -isystem $(BOREDOS_SDK)/include
 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(SOURCES:src/%.c=obj/%.o)
