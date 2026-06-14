@@ -2,9 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
+static unsigned int seed = 12345;
+
+static int my_rand() {
+    seed = seed * 1103515245 + 12345;
+    return (seed >> 16) & 0x7fff;
+}
+
 int main() {
-    srand(time(NULL));
-    int random_num = (rand() % 100) + 1;
+    seed = (unsigned int)time(NULL);
+    int random_num = (my_rand() % 100) + 1;
     printf("Hello, This is my first C program for BoredOS!\n");
     printf("Guess the number between 1 and 100: ");
     while (1) {
