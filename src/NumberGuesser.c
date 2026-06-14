@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 static unsigned int seed = 12345;
 
@@ -17,12 +18,12 @@ int main() {
     int guess = 0;
     while (1) {
         char buf[16];
-        int i = 0;
-        int c;
-        while (i < 15 && (c = fgetc(stdin)) != '\n' && c != EOF) {
-        buf[i++] = (char)c;
+        int bytes = read(0, buf, sizeof(buf) - 1);
+        if (bytes <= 0) {
+            printf("Invalid input. Please enter a valid number: ");
+            continue;
         }
-        buf[i] = '\0';
+        buf[bytes - 1] = '\0';
 
 
         if (sscanf(buf, "%d", &guess) != 1) {
