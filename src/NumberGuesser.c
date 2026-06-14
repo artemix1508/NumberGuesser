@@ -25,9 +25,9 @@ int main() {
             if (got <= 0) continue;
             if (ch == '\r' || ch == '\n') break;
             buf[i++] = ch;
-            }
-            buf[i] = '\0';
-
+        }
+        buf[i] = '\0';
+        printf("\n");
 
         if (sscanf(buf, "%d", &guess) != 1) {
             printf("Invalid input. Please enter a valid number: ");
