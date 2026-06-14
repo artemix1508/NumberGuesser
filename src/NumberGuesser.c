@@ -17,10 +17,14 @@ int main() {
     int guess = 0;
     while (1) {
         char buf[16];
-        if (fgets(buf, sizeof(buf), stdin) == NULL) {
-            printf("Invalid input. Please enter a valid number: ");
-            continue;
+        int i = 0;
+        int c;
+        while (i < 15 && (c = fgetc(stdin)) != '\n' && c != EOF) {
+        buf[i++] = (char)c;
         }
+        buf[i] = '\0';
+
+
         if (sscanf(buf, "%d", &guess) != 1) {
             printf("Invalid input. Please enter a valid number: ");
             continue;
