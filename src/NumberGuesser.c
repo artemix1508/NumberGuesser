@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
+#include <syscall.h>
 
 static unsigned int seed = 12345;
 
@@ -18,12 +18,15 @@ int main() {
     int guess = 0;
     while (1) {
         char buf[16];
-        int bytes = read(0, buf, sizeof(buf) - 1);
-        if (bytes <= 0) {
-            printf("Invalid input. Please enter a valid number: ");
-            continue;
-        }
-        buf[bytes - 1] = '\0';
+        int i = 0;
+        char ch = 0;
+        while (i < 15) {
+            int got = sys_tty_read_in(&ch, 1);
+            if (got <= 0) continue;
+            if (ch == '\r' || ch == '\n') break;
+            buf[i++] = ch;
+            }
+            buf[i] = '\0';
 
 
         if (sscanf(buf, "%d", &guess) != 1) {
