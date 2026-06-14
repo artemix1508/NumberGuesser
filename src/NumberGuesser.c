@@ -11,7 +11,16 @@ static int my_rand() {
 }
 
 int main() {
-    seed = (unsigned int)time(NULL);
+    char upbuf[64];
+    int upfd = sys_open("/proc/uptime", "r");
+    if (upfd >= 0) {
+        int upbytes = sys_read(upfd, upbuf, sizeof(upbuf) - 1);
+        sys_close(upfd);
+        if (upbytes > 0) {
+            upbuf[upbytes] = '\0';
+            seed = (unsigned int)atoi(upbuf);
+        }
+    }
     int random_num = (my_rand() % 100) + 1;
     printf("Hello, This is my first C program for BoredOS!\n");
     printf("Guess the number between 1 and 100: ");
